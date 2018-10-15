@@ -9,3 +9,13 @@ output: html_notebook
 - exponential smoothing
 - ARIMA
 - rstudio
+
+# UV TSA
+- Exponential Smoothing
+- ARIMA
+- ARCH Models
+
+# MV TSA
+- Vector Autoregressive Models
+- Error Correction Models
+- Cointegration
