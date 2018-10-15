@@ -169,3 +169,61 @@ forecast(export.auto,h=24)
 plot(forecast(export.auto,h=24))
 ```
 
+Workshop
+
+```{r}
+rgdp.ses  <- es(rgdp.ts,model="ANN",h=8,holdout=FALSE,intervals="parametric",level=0.95,cfType="MSE")
+rgdp.des  <- es(rgdp.ts,model="AAdN",h=8,holdout=FALSE,intervals="parametric",level=0.95,cfType="MSE")
+rgdp.hwn  <- es(rgdp.ts,model="AAN",h=8,holdout=FALSE,intervals="parametric",level=0.95,cfType="MSE")
+rgdp.hwa  <- es(rgdp.ts,model="AAA",h=8,holdout=FALSE,intervals="parametric",level=0.95,cfType="MSE")
+rgdp.hwm  <- es(rgdp.ts,model="AAM",h=8,holdout=FALSE,intervals="parametric",level=0.95,cfType="MSE")
+rgdp.auto <- es(rgdp.ts,model="ZZZ",h=8,holdout=FALSE,intervals="parametric",level=0.95,cfType="MSE")
+```
+
+```{r}
+MAPE(rgdp.ts,rgdp.ses$fitted)
+MAPE(rgdp.ts,rgdp.des$fitted)
+MAPE(rgdp.ts,rgdp.hwn$fitted)
+MAPE(rgdp.ts,rgdp.hwa$fitted)
+MAPE(rgdp.ts,rgdp.hwm$fitted)
+MAPE(rgdp.ts,rgdp.auto$fitted)
+```
+
+```{r}
+#Forecast h steps using model with lowest MAPE
+forecast(rgdp.auto,h=8)
+plot(forecast(rgdp.auto,h=8))
+```
+
+```{r}
+sales <- read.table("sales.txt", header=T)
+sales$month <- gsub("Q","-",sales$quarter)
+rtime <- zoo::as.yearqtr(sales$quarter, format="%Y-%q")
+sales <- cbind(rtime,sales["sales"])
+sales.ts <- ts(sales$sales,frequency=4,start=c(2001,2))
+plot.ts(sales.ts)
+```
+
+```{r}
+sales.ses  <- es(sales.ts,model="ANN",h=8,holdout=FALSE,intervals="parametric",level=0.95,cfType="MSE")
+sales.des  <- es(sales.ts,model="AAdN",h=8,holdout=FALSE,intervals="parametric",level=0.95,cfType="MSE")
+sales.hwn  <- es(sales.ts,model="AAN",h=8,holdout=FALSE,intervals="parametric",level=0.95,cfType="MSE")
+sales.hwa  <- es(sales.ts,model="AAA",h=8,holdout=FALSE,intervals="parametric",level=0.95,cfType="MSE")
+sales.hwm  <- es(sales.ts,model="AAM",h=8,holdout=FALSE,intervals="parametric",level=0.95,cfType="MSE")
+sales.auto <- es(sales.ts,model="ZZZ",h=8,holdout=FALSE,intervals="parametric",level=0.95,cfType="MSE")
+```
+
+```{r}
+MAPE(sales.ts,sales.ses$fitted)
+MAPE(sales.ts,sales.des$fitted)
+MAPE(sales.ts,sales.hwn$fitted)
+MAPE(sales.ts,sales.hwa$fitted)
+MAPE(sales.ts,sales.hwm$fitted)
+MAPE(sales.ts,sales.auto$fitted)
+```
+
+```{r}
+#Forecast h steps using model with lowest MAPE
+forecast(sales.auto,h=8)
+plot(forecast(sales.auto,h=8))
+```
