@@ -1,0 +1,12 @@
+---
+title: "TSF"
+output: html_notebook
+---
+
+# Overview
+- concepts in ts
+- descriptive analysis ts
+- exponential smoothing
+- ARIMA
+- rstudio
+
