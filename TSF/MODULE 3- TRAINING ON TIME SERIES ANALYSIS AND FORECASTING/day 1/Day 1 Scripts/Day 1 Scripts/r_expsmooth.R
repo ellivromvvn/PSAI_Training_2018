@@ -43,4 +43,3 @@ MAPE(export.ts,export.auto$fitted)
 #Forecast h steps using model with lowest MAPE
 forecast(export.auto,h=24)
 plot(forecast(export.auto,h=24))
-

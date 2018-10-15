@@ -23,9 +23,11 @@ output: html_notebook
 Setting up working directory
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_chunk$set(echo = TRUE)
 knitr::opts_knit$set(root.dir = '~/R/PSAI_Training_2018/TSF/MODULE 3- TRAINING ON TIME SERIES ANALYSIS AND FORECASTING/day 1/Datasets/Datasets')
 ```
+
+note that there are problems in running head function
 
 ```{r}
 inflation <- read.table("inflation.txt",header = T)
@@ -111,5 +113,59 @@ ggplot(data=export, aes(x=month)) +
   labs(x="Month", y="Exports", colour="") +
   theme(legend.position="top") +
   scale_colour_manual(values=c("blue","red"))
+```
+
+# Exponential Smoothing (no minimum requirement)
+
+ANN - no trend no seas  
+AAdN -  dampened trend no seas  
+AAN - w/trend no seas  
+AAA - w/trend add seas  
+AAM - w/trend, mult seas
+
+```{r}
+export <- read.table("export.txt", header=T)
+export$month <- gsub("M","-",export$month)
+rtime <- zoo::as.yearmon(export$month, format="%Y-%m")
+export <- cbind(rtime,export["export"])
+export.ts <- ts(export$export,frequency=12,start=c(1991,1))
+plot.ts(export.ts)
+```
+
+```{r}
+library(smooth)
+export.ses  <- es(export.ts,model="ANN",h=12,holdout=FALSE,intervals="parametric",level=0.95,cfType="MSE")
+export.des  <- es(export.ts,model="AAdN",h=12,holdout=FALSE,intervals="parametric",level=0.95,cfType="MSE")
+export.hwn  <- es(export.ts,model="AAN",h=12,holdout=FALSE,intervals="parametric",level=0.95,cfType="MSE")
+export.hwa  <- es(export.ts,model="AAA",h=12,holdout=FALSE,intervals="parametric",level=0.95,cfType="MSE")
+export.hwm  <- es(export.ts,model="AAM",h=12,holdout=FALSE,intervals="parametric",level=0.95,cfType="MSE")
+export.auto <- es(export.ts,model="ZZZ",h=12,holdout=FALSE,intervals="parametric",level=0.95,cfType="MSE")
+```
+
+ANN  means Additive errors, No trend, No seasonality (SES)  
+AAdN means Additive errors, Additive (dampled) trend, No seasonality (DES)  
+AAN  means Additive errors, Additive trend, No seasonality (Holt-Winters no seasonality)  
+AAA  means Additive errors, Additive trend, Additive seasonality (HW with additive seasonality)  
+AAM  means Additive errors, Additive trend, Multiplicative seasonality (HW with multiplicative seasonality)  
+ZZZ  means all components are (Z) estimated  
+
+```{r}
+MAPE(export.ts,export.ses$fitted)
+MAPE(export.ts,export.des$fitted)
+MAPE(export.ts,export.hwn$fitted)
+MAPE(export.ts,export.hwa$fitted)
+MAPE(export.ts,export.hwm$fitted)
+MAPE(export.ts,export.auto$fitted)
+```
+
+```{r}
+summary(export.auto)
+```
+
+
+```{r}
+#Forecast h steps using model with lowest MAPE
+forecast(export.auto,h=24)
+plot(forecast(export.auto,h=24))
 ```
 
