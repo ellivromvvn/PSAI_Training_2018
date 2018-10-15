@@ -14,11 +14,12 @@ inflation <- read.table("inflation.txt",header = T)
 head(inflation) #for table preview/checking
 
 inflation$month <- gsub("M","-",inflation$month)
-month <- as.yearmon(inflation$month, format="%Y-%m")
+month <- as.yearmon(inflation$month, format="%Y-%m") #zoo package
 inflation <- cbind(month,inflation["inflation"])
 head(inflation)
 
 #Creating a line graph using the plot function
+plot(inflation)
 plot(inflation, type="o")
 plot(inflation, type="l",col="blue",xlab="",ylab="Inflation Rate",
                 main="Inflation Rate \n(Jan 2013 - Sep 2018)")

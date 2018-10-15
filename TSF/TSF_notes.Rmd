@@ -19,3 +19,5 @@ output: html_notebook
 - Vector Autoregressive Models
 - Error Correction Models
 - Cointegration
+
+
