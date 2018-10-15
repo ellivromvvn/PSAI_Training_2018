@@ -9,4 +9,3 @@ output: html_notebook
 - exponential smoothing
 - ARIMA
 - rstudio
-
