@@ -224,6 +224,6 @@ MAPE(sales.ts,sales.auto$fitted)
 
 ```{r}
 #Forecast h steps using model with lowest MAPE
-forecast(sales.auto,h=8)
-plot(forecast(sales.auto,h=8))
+forecast(sales.des,h=8)
+plot(forecast(sales.des,h=8))
 ```
