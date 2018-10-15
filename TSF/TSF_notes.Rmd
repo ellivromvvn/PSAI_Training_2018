@@ -20,4 +20,96 @@ output: html_notebook
 - Error Correction Models
 - Cointegration
 
+Setting up working directory
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_knit$set(root.dir = '~/R/PSAI_Training_2018/TSF/MODULE 3- TRAINING ON TIME SERIES ANALYSIS AND FORECASTING/day 1/Datasets/Datasets')
+```
+
+```{r}
+inflation <- read.table("inflation.txt",header = T)
+inflation$month <- gsub("M","-",inflation$month)
+month <- zoo::as.yearmon(inflation$month, format="%Y-%m") #zoo package
+inflation <- cbind(month,inflation["inflation"])
+plot(inflation)
+plot(inflation, type="o")
+plot(inflation, type="l",col="blue",xlab="",ylab="Inflation Rate",
+                main="Inflation Rate \n(Jan 2013 - Sep 2018)")
+```
+
+Hodrick-Prescott Filter
+
+```{r}
+inflation.hp <- mFilter::hpfilter(inflation$inflation, freq=14400, type="lambda")
+plot(inflation.hp)
+inflation <- cbind(inflation,inflation.hp$trend)
+colnames(inflation)[3] <- "hp_trend"
+```
+
+ggplot input: Dataframe
+
+```{r}
+library(ggplot2)
+ggplot(data=inflation, aes(x=month)) + 
+  geom_line(aes(y=inflation, colour="Inflation Rate")) + 
+  geom_line(aes(y=hp_trend, colour="HP Trend")) +
+  labs(x="Month", y="Inflation Rate", colour="") +
+  theme(legend.position="top") +
+  scale_colour_manual(values=c("blue","red"))
+```
+
+Workshop 1
+
+```{r}
+rgdp.ts<-ts(read.table("rgdp2.txt",header = T),frequency=4,start=c(1998,1),end=c(2018,2))
+
+#line plot with elements
+plot(rgdp.ts, main="QuartelyGDP of the Philippines: Q1 1998 -Q2 2018
+(at constant 2000 prices)",
+ylab="Real GDP (in Million Pesos)", xlab="")
+```
+
+Workshop 1
+
+```{r}
+#time series decomposition
+decomp_rgdp<-decompose(rgdp.ts,"additive")
+#plot components
+par(mfrow=c(2,2)) #run this par if you want a single panel of four graphs
+plot(rgdp.ts,ylab="Observed",xlab="")
+plot(decomp_rgdp$trend,ylab="Trend-Cycle",xlab="")
+plot(decomp_rgdp$seasonal,ylab="Seasonality",xlab="")
+plot(decomp_rgdp$random,ylab="Irregular",xlab="")
+```
+
+Workshop 2
+
+```{r}
+export <- read.table("export.txt",header = T)
+export$month <- gsub("M","-",export$month)
+month <- zoo::as.yearmon(export$month, format="%Y-%m") #zoo package
+export <- cbind(month,export["export"])
+plot(export, type="l")
+```
+
+
+```{r}
+export.hp <- mFilter::hpfilter(export$export, freq=14400, type="lambda")
+plot(export.hp)
+export <- cbind(export,export.hp$trend)
+colnames(export)[3] <- "hp_trend"
+```
+
+
+
+```{r}
+library(ggplot2)
+ggplot(data=export, aes(x=month)) + 
+  geom_line(aes(y=export, colour="Exports")) + 
+  geom_line(aes(y=hp_trend, colour="HP Trend")) +
+  labs(x="Month", y="Exports", colour="") +
+  theme(legend.position="top") +
+  scale_colour_manual(values=c("blue","red"))
+```
 

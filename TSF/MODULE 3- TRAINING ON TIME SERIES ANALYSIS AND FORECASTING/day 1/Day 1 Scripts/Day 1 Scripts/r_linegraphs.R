@@ -93,7 +93,7 @@ plot(rgdp, type="l",col="red",xlab="", ylab="Real GDP (in million Pesos)",
 
 #Hodrick-Prescott Filter
 inflation.hp <- hpfilter(inflation$inflation, freq=14400, type="lambda")
-#for freq values: monthly-1440, quarterly-1600, annual-100 
+#for freq values: monthly-14400, quarterly-1600, annual-100 
 plot(inflation.hp)
 
 inflation <- cbind(inflation,inflation.hp$trend)
@@ -109,3 +109,4 @@ ggplot(data=inflation, aes(x=month)) +
   labs(x="Month", y="Inflation Rate", colour="") +
   theme(legend.position="top") +
   scale_colour_manual(values=c("blue","red"))
+
