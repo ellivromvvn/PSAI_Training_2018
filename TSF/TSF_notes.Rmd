@@ -19,3 +19,16 @@ output: html_notebook
 - Vector Autoregressive Models
 - Error Correction Models
 - Cointegration
+
+Load the necessary packages
+
+```{r}
+library("zoo")       #Date manipulation package
+library("mFilter")   #Time series filter
+library("ggplot2")   #Charts
+library("smooth")    #Smoothing
+library("forecast")  #Forecasts
+library("stats")     #For seasonal subseries plots
+```
+
+Import Data and Manage Date

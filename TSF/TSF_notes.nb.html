@@ -1724,10 +1724,24 @@ $(document).ready(function () {
 <li>Error Correction Models</li>
 <li>Cointegration</li>
 </ul>
+<p>Load the necessary packages</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShcInpvb1wiKSAgICAgICAjRGF0ZSBtYW5pcHVsYXRpb24gcGFja2FnZVxubGlicmFyeShcIm1GaWx0ZXJcIikgICAjVGltZSBzZXJpZXMgZmlsdGVyXG5saWJyYXJ5KFwiZ2dwbG90MlwiKSAgICNDaGFydHNcbmxpYnJhcnkoXCJzbW9vdGhcIikgICAgI1Ntb290aGluZ1xubGlicmFyeShcImZvcmVjYXN0XCIpICAjRm9yZWNhc3RzXG5saWJyYXJ5KFwic3RhdHNcIikgICAgICNGb3Igc2Vhc29uYWwgc3Vic2VyaWVzIHBsb3RzXG5gYGAifQ== -->
+<pre class="r"><code>library(&quot;zoo&quot;)       #Date manipulation package
+library(&quot;mFilter&quot;)   #Time series filter
+library(&quot;ggplot2&quot;)   #Charts
+library(&quot;smooth&quot;)    #Smoothing
+library(&quot;forecast&quot;)  #Forecasts
+library(&quot;stats&quot;)     #For seasonal subseries plots</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Import Data and Manage Date</p>
 <!-- rnb-text-end -->
 </div>
 
-<div id="rmd-source-code">LS0tDQp0aXRsZTogIlRTRiINCm91dHB1dDogaHRtbF9ub3RlYm9vaw0KLS0tDQoNCiMgT3ZlcnZpZXcNCi0gY29uY2VwdHMgaW4gdHMNCi0gZGVzY3JpcHRpdmUgYW5hbHlzaXMgdHMNCi0gZXhwb25lbnRpYWwgc21vb3RoaW5nDQotIEFSSU1BDQotIHJzdHVkaW8NCg0KIyBVViBUU0ENCi0gRXhwb25lbnRpYWwgU21vb3RoaW5nDQotIEFSSU1BDQotIEFSQ0ggTW9kZWxzDQoNCiMgTVYgVFNBDQotIFZlY3RvciBBdXRvcmVncmVzc2l2ZSBNb2RlbHMNCi0gRXJyb3IgQ29ycmVjdGlvbiBNb2RlbHMNCi0gQ29pbnRlZ3JhdGlvbg==</div>
+<div id="rmd-source-code">LS0tDQp0aXRsZTogIlRTRiINCm91dHB1dDogaHRtbF9ub3RlYm9vaw0KLS0tDQoNCiMgT3ZlcnZpZXcNCi0gY29uY2VwdHMgaW4gdHMNCi0gZGVzY3JpcHRpdmUgYW5hbHlzaXMgdHMNCi0gZXhwb25lbnRpYWwgc21vb3RoaW5nDQotIEFSSU1BDQotIHJzdHVkaW8NCg0KIyBVViBUU0ENCi0gRXhwb25lbnRpYWwgU21vb3RoaW5nDQotIEFSSU1BDQotIEFSQ0ggTW9kZWxzDQoNCiMgTVYgVFNBDQotIFZlY3RvciBBdXRvcmVncmVzc2l2ZSBNb2RlbHMNCi0gRXJyb3IgQ29ycmVjdGlvbiBNb2RlbHMNCi0gQ29pbnRlZ3JhdGlvbg0KDQpMb2FkIHRoZSBuZWNlc3NhcnkgcGFja2FnZXMNCg0KYGBge3J9DQpsaWJyYXJ5KCJ6b28iKSAgICAgICAjRGF0ZSBtYW5pcHVsYXRpb24gcGFja2FnZQ0KbGlicmFyeSgibUZpbHRlciIpICAgI1RpbWUgc2VyaWVzIGZpbHRlcg0KbGlicmFyeSgiZ2dwbG90MiIpICAgI0NoYXJ0cw0KbGlicmFyeSgic21vb3RoIikgICAgI1Ntb290aGluZw0KbGlicmFyeSgiZm9yZWNhc3QiKSAgI0ZvcmVjYXN0cw0KbGlicmFyeSgic3RhdHMiKSAgICAgI0ZvciBzZWFzb25hbCBzdWJzZXJpZXMgcGxvdHMNCmBgYA0KDQpJbXBvcnQgRGF0YSBhbmQgTWFuYWdlIERhdGUNCg==</div>
 
 
 
