@@ -32,3 +32,9 @@ library("stats")     #For seasonal subseries plots
 ```
 
 Import Data and Manage Date
+
+```{r}
+inflation <- read.table("~/R/PSAI_Training_2018/TSF/Datasets/inflation.txt",header = T)
+head(inflation) #for table preview/checking
+```
+
