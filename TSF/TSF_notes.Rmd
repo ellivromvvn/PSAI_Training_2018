@@ -228,3 +228,26 @@ forecast(sales.des,h=8)
 plot(forecast(sales.des,h=8))
 ```
 
+Day 2
+
+ARIMA
+
+Investigate the "dependency structure".
+
+- how the past values affect the present and future values.
+
+Unit Root Test (Stationarity Tests)
+
+- The presence of unit root makes it non-stationarity.
+
+How to detect unit roots.
+
+1. line graphs (suggestive)
+2. Correlogram (suggestive)
+3. unit root tests (conclusive)
+
+ADF Test Setup
+
+$H_0:$ The series has a unit root. (non stationary)  
+$H_a:$ The series has no unit root. (stationary)
+
