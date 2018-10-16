@@ -227,3 +227,4 @@ MAPE(sales.ts,sales.auto$fitted)
 forecast(sales.des,h=8)
 plot(forecast(sales.des,h=8))
 ```
+
