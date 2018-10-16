@@ -352,5 +352,53 @@ acf(diff(rain.ts))
 pacf(diff(rain.ts))
 ```
 
+Autoregressive Process
+
+Process - Behavior
+
+Characterizing the ts (ACF, PACF)
+
+$AR(p)$ ACF tapers off, PACF cuts off after lag $p$
+
+$MA(q)$ ACF cuts off after lag $q$. PACF tapers off
+
+$ARMA(p,q)$ both ACF and PACF tapers off  
+challege: know the *correct* combination of $p$ and $q$
+
+Workshop
+
+```{r}
+par(mar = c(4, 4, 4, 1))
+acf(diff(pder.ts))
+pacf(diff(pder.ts))
+```
+
+$MA(1)$ since the ACF cuts off at lag 1.
+
+$AR(1)$ since the PACF cuts off at lag 1.
+
+```{r}
+par(mar = c(4, 4, 4, 1))
+plot(rgdp.ts)
+acf(rgdp.ts)
+pacf(rgdp.ts)
+```
+
+```{r}
+adf.test(rgdp.ts, alternative="stationary")
+```
+
+```{r}
+par(mar = c(4, 4, 4, 1))
+plot(diff(rgdp.ts,1))
+acf(diff(pder.ts))
+pacf(diff(pder.ts))
+```
+
+```{r}
+adf.test(diff(rgdp.ts), alternative="stationary")
+```
+
+
 
 
