@@ -328,7 +328,6 @@ pacf(diff(cpi.ts))
 ```
 
 ```{r}
-#CPI Data
 rain <- read.table("rain.txt", header=T)
 rain.ts <- ts(rain$ave_rain,frequency=12,start=c(2009,1))
 ```
@@ -418,9 +417,68 @@ pacf(diff(diff(rgdp.ts),4))
 adf.test(diff(diff(rgdp.ts),4), alternative="stationary")
 ```
 
+Forecasting
 
+pder was differenced once
 
+```{r}
+pder.arima<-arima(pder.ts,order=c(1,1,0))
+pder.arima
+pder.pred<-forecast(pder.arima, h = 48, level=c(97.5))
+```
 
+```{r}
+plot(pder.pred)
+```
 
+```{r}
+cpi.arima<-arima(cpi.ts,order=c(13,1,1))
+cpi.arima
+cpi.pred<-forecast(cpi.arima, h = 48, level=c(97.5))
+```
 
+```{r}
+plot(cpi.pred)
+```
 
+justify lag 13. why is future data dependent 13 datas back.
+
+```{r}
+cpi.auto.arima<-auto.arima(cpi.ts,max.order = 15)
+cpi.auto.arima
+cpi.auto.pred<-forecast(cpi.auto.arima, h = 48, level=c(97.5))
+```
+
+```{r}
+plot(cpi.auto.pred)
+```
+
+```{r}
+pder.auto.arima<-auto.arima(pder.ts,max.order= 12,trace=TRUE,seasonal=TRUE)
+pder.auto.arima
+pder.auto.pred<-forecast(pder.auto.arima, h = 48, level=c(97.5))
+```
+
+```{r}
+plot(pder.auto.pred)
+```
+
+```{r}
+rgdp.auto.arima<-auto.arima(rgdp.ts,max.order= 12,trace=TRUE,seasonal=TRUE)
+rgdp.auto.arima
+rgdp.auto.pred<-forecast(rgdp.auto.arima, h = 48, level=c(97.5))
+```
+
+```{r}
+plot(rgdp.auto.pred)
+```
+
+```{r}
+export.auto.arima<-auto.arima(export.ts,max.order= 12,seasonal=TRUE, stepwise = FALSE)
+export.auto.arima
+export.auto.pred<-forecast(export.auto.arima, h = 10, level=c(97.5))
+```
+
+```{r}
+plot(export.auto.pred)
+```
