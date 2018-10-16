@@ -251,3 +251,106 @@ ADF Test Setup
 $H_0:$ The series has a unit root. (non stationary)  
 $H_a:$ The series has no unit root. (stationary)
 
+Load Packages
+
+```{r}
+library(forecast)
+library(tseries)
+```
+
+```{r}
+#Performing an ADF test on Peso-Dollar Excahange data
+pder <- read.table("pder.txt", header=T)
+head(pder)
+```
+
+```{r}
+pder.ts <- ts(pder$pder,frequency=12,start=c(1980,1))
+head(pder.ts)
+```
+
+```{r}
+plot(pder.ts)
+```
+
+```{r}
+plot(diff(pder.ts))
+```
+
+```{r}
+adf.test(pder.ts, alternative="stationary")
+adf.test(diff(pder.ts), alternative="stationary")
+```
+
+Autocorrelation
+
+- strength of linear correlation with it self.
+
+Partial Autocorrelation
+
+- removing effects.
+
+ACF
+
+\[
+Corr(y_t,y_{t+k})
+\]
+
+PACF
+
+\[
+Corr(y_t,y_{t-1}|y_{t-1},y_{t-2},\cdots,y_{t-k+1})
+\]
+
+```{r}
+#CPI Data
+cpi <- read.table("cpi.txt", header=T)
+cpi.ts <- ts(cpi$cpi,frequency=12,start=c(1994,1))
+```
+
+```{r}
+adf.test(cpi.ts, alternative="stationary")
+adf.test(diff(cpi.ts), alternative="stationary")
+```
+
+```{r}
+par(mar = c(4, 4, 4, 1))
+plot(cpi.ts)
+acf(cpi.ts)
+pacf(cpi.ts)
+```
+
+```{r}
+par(mar = c(4, 4, 4, 1))
+plot(diff(cpi.ts))
+acf(diff(cpi.ts))
+pacf(diff(cpi.ts))
+```
+
+```{r}
+#CPI Data
+rain <- read.table("rain.txt", header=T)
+rain.ts <- ts(rain$ave_rain,frequency=12,start=c(2009,1))
+```
+
+```{r}
+adf.test(rain.ts, alternative="stationary")
+adf.test(diff(rain.ts), alternative="stationary")
+```
+
+```{r}
+par(mar = c(4, 4, 4, 1))
+plot(rain.ts)
+acf(rain.ts)
+pacf(rain.ts)
+```
+
+```{r}
+par(mar = c(4, 4, 4, 1))
+plot(diff(rain.ts))
+acf(diff(rain.ts))
+pacf(diff(rain.ts))
+```
+
+
+
