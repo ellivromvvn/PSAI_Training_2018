@@ -391,13 +391,35 @@ adf.test(rgdp.ts, alternative="stationary")
 ```{r}
 par(mar = c(4, 4, 4, 1))
 plot(diff(rgdp.ts,1))
-acf(diff(pder.ts))
-pacf(diff(pder.ts))
+acf(diff(rgdp.ts))
+pacf(diff(rgdp.ts))
 ```
 
 ```{r}
 adf.test(diff(rgdp.ts), alternative="stationary")
 ```
+
+If there is seasonality in the data
+
+1. Remove seasonality first and then add it later.
+2. Include it in the ARIMA. If included, use SARIMA methodology.
+
+auto.arima CAN include seasonal variations.
+
+```{r}
+# How to remove seasonality
+par(mar = c(4, 4, 4, 1))
+plot(diff(diff(rgdp.ts),4)) #seasonal differencing:4-qtr, 12-mos
+acf(diff(diff(rgdp.ts),4))
+pacf(diff(diff(rgdp.ts),4))
+```
+
+```{r}
+adf.test(diff(diff(rgdp.ts),4), alternative="stationary")
+```
+
+
+
 
 
 
