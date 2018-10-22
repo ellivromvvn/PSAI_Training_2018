@@ -2,6 +2,17 @@
 title: "Statistical Learning"
 output: html_notebook
 ---
+# Overview
 
 We fit $f$ to minimize error.
 
+# RStudio
+
+```{r include=FALSE}
+library(ISLR)
+```
+
+
+# Regression Methods
+
+## Linear Regression
