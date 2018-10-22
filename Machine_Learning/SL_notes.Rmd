@@ -11,6 +11,8 @@ We fit $f$ to minimize error.
 ```{r include=FALSE}
 library(ISLR) #loading package and loading auto data
 data("Auto")
+library(MASS)
+data("Boston")
 ```
 
 # Regression Methods
