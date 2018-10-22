@@ -9,9 +9,9 @@ We fit $f$ to minimize error.
 # RStudio
 
 ```{r include=FALSE}
-library(ISLR)
+library(ISLR) #loading package and loading auto data
+data("Auto")
 ```
-
 
 # Regression Methods
 
