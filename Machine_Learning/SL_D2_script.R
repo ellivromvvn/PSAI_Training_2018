@@ -97,3 +97,58 @@ cv.carseats
 
 par(mfrow=c(1,2))
 plot(cv.carseats$size,cv.carseats$dev,type="b")
+plot(cv.carseats$k,cv.carseats$dev,type="b") #k is cost complexity parameter
+
+prune.carseats<-prune.misclass(tree.carseats,best=7)
+
+par(mfrow=c(1,1))
+plot(prune.carseats)
+text(prune.carseats,pretty = 0)
+
+#testing on the test set (testing the performance)
+tree.pred<-predict(prune.carseats,Carseats.test,
+                   type="class")
+
+table(tree.pred,High.test)
+(96+54)/200
+
+#try best=15
+
+prune.carseats<-prune.misclass(tree.carseats,best=15)
+
+par(mfrow=c(1,1))
+plot(prune.carseats)
+text(prune.carseats,pretty = 0)
+
+#testing on the test set (testing the performance)
+tree.pred<-predict(prune.carseats,Carseats.test,
+                   type="class")
+
+table(tree.pred,High.test)
+(98+56)/200
+
+## Regression Trees
+library(MASS)
+
+set.seed(1)
+train<-sample(1:nrow(Boston),nrow(Boston)/2)
+tree.boston<-tree(medv~.,data=Boston,subset=train)
+summary(tree.boston)
+plot(tree.boston)
+text(tree.boston,pretty = 0)
+
+##prune
+cv.boston<-cv.tree(tree.boston)
+cv.boston
+prune.boston<-prune.tree(tree.boston,best=4)
+plot(prune.boston)
+text(prune.boston,pretty=0)
+
+#error rate
+yhat<-predict(prune.boston,newdata = Boston[-train,])
+boston.test<-Boston[-train,"medv"]
+mean((yhat-boston.test)^2) #MSE
+sqrt(mean((yhat-boston.test)^2)) ##RMSE
+#the deviation of actual values is the RMSE
+
+plot(yhat, boston.test)
