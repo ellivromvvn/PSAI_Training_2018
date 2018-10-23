@@ -8,7 +8,8 @@ attach(Default)
 plot(Default$balance,Default$income,
      col=ifelse(Default$default=="Yes",
                 "darkorange","gray"))
-legend(2400,70000,col=c("darkorange","gray"),c("yes","no"),pch=c(2,2),bty="o")
+legend(2400,70000,col=c("darkorange","gray"),c("yes","no"),
+       pch=c(2,2),bty="o")
 
 par(mfrow=c(1,2))
 plot(Default$default,Default$balance,col="red",varwidth=F,
@@ -99,7 +100,8 @@ cv.carseats
 
 par(mfrow=c(1,2))
 plot(cv.carseats$size,cv.carseats$dev,type="b")
-plot(cv.carseats$k,cv.carseats$dev,type="b") #k is cost complexity parameter
+plot(cv.carseats$k,cv.carseats$dev,type="b") 
+#k is cost complexity parameter
 
 prune.carseats<-prune.misclass(tree.carseats,best=7)
 
@@ -185,13 +187,15 @@ sqrt(mean((yhat.bag-boston.test)^2))
 
 rf.boston<-randomForest(medv~.,data=Boston, 
                          subset=train,mtry=4,
-                         importance=T) #mtry is 4 because sqrt(10) predictors
+                         importance=T) 
+#mtry is 4 because sqrt(10) predictors
 
 yhat.rf<-predict(rf.boston,newdata = Boston[-train,])
 mean((yhat.rf-boston.test)^2)
 sqrt(mean((yhat.rf-boston.test)^2))
 
-importance(rf.boston) #note the highest %IncMSE (important variable)
+importance(rf.boston) 
+#note the highest %IncMSE (important variable)
 varImpPlot(rf.boston)
 
 
@@ -225,5 +229,6 @@ rf.carseats<-randomForest(High~.-Sales,data=Carseats,
 yhat.rf<-predict(rf.carseats,newdata = Carseats[-train,])
 table(yhat.rf,High.test)
 (104+59)/200
-importance(rf.carseats) #note the highest %IncMSE (important variable)
+importance(rf.carseats) 
+#note the highest %IncMSE (important variable)
 varImpPlot(rf.carseats)
