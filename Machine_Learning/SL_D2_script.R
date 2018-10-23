@@ -67,6 +67,8 @@ High<-ifelse(Carseats$Sales<=8,"No","Yes")
 Carseats<-data.frame(Carseats,High)
 names(Carseats)
 
+##classification tree
+
 ## maximum tree
 tree.carseats<-tree(High~.-Sales,Carseats)
 summary(tree.carseats)
@@ -152,3 +154,76 @@ sqrt(mean((yhat-boston.test)^2)) ##RMSE
 #the deviation of actual values is the RMSE
 
 plot(yhat, boston.test)
+
+##Bagging and RandomForest
+
+install.packages("randomForest")
+library(randomForest)
+
+##Bagging
+
+data(Boston)
+set.seed(1)
+bag.boston<-randomForest(medv~.,data=Boston, 
+                         subset=train,mtry=13,
+                         importance=T)
+
+yhat.bag<-predict(bag.boston,newdata = Boston[-train,])
+mean((yhat.bag-boston.test)^2)
+sqrt(mean((yhat.bag-boston.test)^2))     
+
+#adding ntree=25
+bag.boston<-randomForest(medv~.,data=Boston, 
+                         subset=train,mtry=13,
+                         importance=T,ntree=25)
+
+yhat.bag<-predict(bag.boston,newdata = Boston[-train,])
+mean((yhat.bag-boston.test)^2)
+sqrt(mean((yhat.bag-boston.test)^2))
+
+##Random Forest
+
+rf.boston<-randomForest(medv~.,data=Boston, 
+                         subset=train,mtry=4,
+                         importance=T) #mtry is 4 because sqrt(10) predictors
+
+yhat.rf<-predict(rf.boston,newdata = Boston[-train,])
+mean((yhat.rf-boston.test)^2)
+sqrt(mean((yhat.rf-boston.test)^2))
+
+importance(rf.boston) #note the highest %IncMSE (important variable)
+varImpPlot(rf.boston)
+
+
+data(Smarket) #ISLR
+?Smarket
+
+#Exercise Carseats
+# Bagging
+# load randomForest package
+
+set.seed(1)
+train<-sample(1:nrow(Carseats),200)
+Carseats.test<-Carseats[-train,]
+High.test<-High[-train]
+
+set.seed(1)
+bag.carseats<-randomForest(High~.-Sales,data=Carseats, 
+                         subset=train,mtry=10,
+                         importance=T)
+
+yhat.bag<-predict(bag.carseats,newdata = Carseats[-train,])
+table(yhat.bag,High.test)
+(103+61)/200
+
+##Random Forest
+set.seed(1)
+rf.carseats<-randomForest(High~.-Sales,data=Carseats, 
+                        subset=train,mtry=4,
+                        importance=T,ntree=1000)
+
+yhat.rf<-predict(rf.carseats,newdata = Carseats[-train,])
+table(yhat.rf,High.test)
+(104+59)/200
+importance(rf.carseats) #note the highest %IncMSE (important variable)
+varImpPlot(rf.carseats)
