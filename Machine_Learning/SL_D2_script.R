@@ -6,7 +6,7 @@ data(Default)
 attach(Default)
 
 plot(Default$balance,Default$income,
-     col=ifelse(Default$default=="yes",
+     col=ifelse(Default$default=="Yes",
                 "darkorange","gray"))
 legend(2400,70000,col=c("darkorange","gray"),c("yes","no"),pch=c(2,2),bty="o")
 
@@ -58,3 +58,42 @@ table(glm.pred,test$default)
 mean(glm.pred==test$default)
 
 #Classification and Regression Trees
+
+install.packages("tree")
+library(tree)
+data("Carseats")
+summary(Carseats$Sales)
+High<-ifelse(Carseats$Sales<=8,"No","Yes")
+Carseats<-data.frame(Carseats,High)
+names(Carseats)
+
+## maximum tree
+tree.carseats<-tree(High~.-Sales,Carseats)
+summary(tree.carseats)
+plot(tree.carseats)
+text(tree.carseats,pretty = 0)
+
+##Training and test sets
+set.seed(1)
+train<-sample(1:nrow(Carseats),200)
+Carseats.test<-Carseats[-train,]
+High.test<-High[-train]
+
+##maximal tree
+tree.carseats<-tree(High~.-Sales,Carseats,subset=train)
+tree.pred<-predict(tree.carseats,Carseats.test,type="class")
+table(tree.pred,High.test)
+
+#test error rate
+(98+56)/200
+
+## Pruning
+
+set.seed(3)
+cv.carseats<-cv.tree(tree.carseats,FUN=prune.misclass)
+
+names(cv.carseats)
+cv.carseats
+
+par(mfrow=c(1,2))
+plot(cv.carseats$size,cv.carseats$dev,type="b")
